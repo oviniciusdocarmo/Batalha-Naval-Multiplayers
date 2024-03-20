@@ -4,6 +4,7 @@ const server = new WebSocket.Server({ port: 8080 });
 let players = [];
 let games = [];
 let time = [];
+let tabuleiro = [];
 
 console.log('Servidor rodando na porta 8080');
 
@@ -37,8 +38,24 @@ server.on('connection', (socket) => {
 
         //momento 1: adicionando navios no tabuleiro
         player1.send('Momento 1: Adicione suas embarcações no tabuleiro');
-        player2.send('Momento 1: O player1 está adicionando as embarcações');
+        player2.send('Momento 1: Adicione suas embarcações no tabuleiro');
         console.log('Momento 1...');
+        // Initialize tabuleiro array for the current game
+        tabuleiro['player1'] = [];
+        player1.on('message', (message) => {
+            //armazenar as 32 posições do tabuleiro
+            if (tabuleiro['player1'].length <= 32) {
+                tabuleiro['player1'].push(message.toString());
+            }
+        });
+        tabuleiro['player2'] = [];
+        player2.on('message', (message) => {
+            //armazenar as 32 posições do tabuleiro
+            if (tabuleiro['player2'].length <= 32) {
+                tabuleiro['player2'].push(message.toString());
+            }
+        });
+
 
         //adicionando tempo da partida
         time.push({ id: gameId, time: 0 });

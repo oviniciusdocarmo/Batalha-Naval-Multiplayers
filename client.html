@@ -15,7 +15,8 @@
             width: 5%;
             display: none;
         }
-        #regras{
+
+        #regras {
             display: none;
         }
     </style>
@@ -28,124 +29,124 @@
     <div id="message"></div></br>
     <div class="container">
         <div>
-            <button id="A1" onclick="socket.send('A1')">A1</button>
-            <button id="A2" onclick="socket.send('A2')">A2</button>
-            <button id="A3" onclick="socket.send('A3')">A3</button>
-            <button id="A4" onclick="socket.send('A4')">A4</button>
-            <button id="A5" onclick="socket.send('A5')">A5</button>
-            <button id="A6" onclick="socket.send('A6')">A6</button>
-            <button id="A7" onclick="socket.send('A7')">A7</button>
-            <button id="A8" onclick="socket.send('A8')">A8</button>
-            <button id="A9" onclick="socket.send('A9')">A9</button>
-            <button id="A10" onclick="socket.send('A10')">A10</button>
+            <button id="A1" onclick="enviarPosicao('A1')">A1</button>
+            <button id="A2" onclick="enviarPosicao('A2')">A2</button>
+            <button id="A3" onclick="enviarPosicao('A3')">A3</button>
+            <button id="A4" onclick="enviarPosicao('A4')">A4</button>
+            <button id="A5" onclick="enviarPosicao('A5')">A5</button>
+            <button id="A6" onclick="enviarPosicao('A6')">A6</button>
+            <button id="A7" onclick="enviarPosicao('A7')">A7</button>
+            <button id="A8" onclick="enviarPosicao('A8')">A8</button>
+            <button id="A9" onclick="enviarPosicao('A9')">A9</button>
+            <button id="A10" onclick="enviarPosicao('A10')">A10</button>
         </div>
         <div>
-            <button id="B1" onclick="socket.send('B1')">B1</button>
-            <button id="B2" onclick="socket.send('B2')">B2</button>
-            <button id="B3" onclick="socket.send('B3')">B3</button>
-            <button id="B4" onclick="socket.send('B4')">B4</button>
-            <button id="B5" onclick="socket.send('B5')">B5</button>
-            <button id="B6" onclick="socket.send('B6')">B6</button>
-            <button id="B7" onclick="socket.send('B7')">B7</button>
-            <button id="B8" onclick="socket.send('B8')">B8</button>
-            <button id="B9" onclick="socket.send('B9')">B9</button>
-            <button id="B10" onclick="socket.send('B10')">B10</button>
+            <button id="B1" onclick="enviarPosicao('B1')">B1</button>
+            <button id="B2" onclick="enviarPosicao('B2')">B2</button>
+            <button id="B3" onclick="enviarPosicao('B3')">B3</button>
+            <button id="B4" onclick="enviarPosicao('B4')">B4</button>
+            <button id="B5" onclick="enviarPosicao('B5')">B5</button>
+            <button id="B6" onclick="enviarPosicao('B6')">B6</button>
+            <button id="B7" onclick="enviarPosicao('B7')">B7</button>
+            <button id="B8" onclick="enviarPosicao('B8')">B8</button>
+            <button id="B9" onclick="enviarPosicao('B9')">B9</button>
+            <button id="B10" onclick="enviarPosicao('B10')">B10</button>
         </div>
         <div>
-            <button id="C1" onclick="socket.send('C1')">C1</button>
-            <button id="C2" onclick="socket.send('C2')">C2</button>
-            <button id="C3" onclick="socket.send('C3')">C3</button>
-            <button id="C4" onclick="socket.send('C4')">C4</button>
-            <button id="C5" onclick="socket.send('C5')">C5</button>
-            <button id="C6" onclick="socket.send('C6')">C6</button>
-            <button id="C7" onclick="socket.send('C7')">C7</button>
-            <button id="C8" onclick="socket.send('C8')">C8</button>
-            <button id="C9" onclick="socket.send('C9')">C9</button>
-            <button id="C10" onclick="socket.send('C10')">C10</button>
+            <button id="C1" onclick="enviarPosicao('C1')">C1</button>
+            <button id="C2" onclick="enviarPosicao('C2')">C2</button>
+            <button id="C3" onclick="enviarPosicao('C3')">C3</button>
+            <button id="C4" onclick="enviarPosicao('C4')">C4</button>
+            <button id="C5" onclick="enviarPosicao('C5')">C5</button>
+            <button id="C6" onclick="enviarPosicao('C6')">C6</button>
+            <button id="C7" onclick="enviarPosicao('C7')">C7</button>
+            <button id="C8" onclick="enviarPosicao('C8')">C8</button>
+            <button id="C9" onclick="enviarPosicao('C9')">C9</button>
+            <button id="C10" onclick="enviarPosicao('C10')">C10</button>
         </div>
         <div>
-            <button id="D1" onclick="socket.send('D1')">D1</button>
-            <button id="D2" onclick="socket.send('D2')">D2</button>
-            <button id="D3" onclick="socket.send('D3')">D3</button>
-            <button id="D4" onclick="socket.send('D4')">D4</button>
-            <button id="D5" onclick="socket.send('D5')">D5</button>
-            <button id="D6" onclick="socket.send('D6')">D6</button>
-            <button id="D7" onclick="socket.send('D7')">D7</button>
-            <button id="D8" onclick="socket.send('D8')">D8</button>
-            <button id="D9" onclick="socket.send('D9')">D9</button>
-            <button id="D10" onclick="socket.send('D10')">D10</button>
+            <button id="D1" onclick="enviarPosicao('D1')">D1</button>
+            <button id="D2" onclick="enviarPosicao('D2')">D2</button>
+            <button id="D3" onclick="enviarPosicao('D3')">D3</button>
+            <button id="D4" onclick="enviarPosicao('D4')">D4</button>
+            <button id="D5" onclick="enviarPosicao('D5')">D5</button>
+            <button id="D6" onclick="enviarPosicao('D6')">D6</button>
+            <button id="D7" onclick="enviarPosicao('D7')">D7</button>
+            <button id="D8" onclick="enviarPosicao('D8')">D8</button>
+            <button id="D9" onclick="enviarPosicao('D9')">D9</button>
+            <button id="D10" onclick="enviarPosicao('D10')">D10</button>
         </div>
         <div>
-            <button id="E1" onclick="socket.send('E1')">E1</button>
-            <button id="E2" onclick="socket.send('E2')">E2</button>
-            <button id="E3" onclick="socket.send('E3')">E3</button>
-            <button id="E4" onclick="socket.send('E4')">E4</button>
-            <button id="E5" onclick="socket.send('E5')">E5</button>
-            <button id="E6" onclick="socket.send('E6')">E6</button>
-            <button id="E7" onclick="socket.send('E7')">E7</button>
-            <button id="E8" onclick="socket.send('E8')">E8</button>
-            <button id="E9" onclick="socket.send('E9')">E9</button>
-            <button id="E10" onclick="socket.send('E10')">E10</button>
+            <button id="E1" onclick="enviarPosicao('E1')">E1</button>
+            <button id="E2" onclick="enviarPosicao('E2')">E2</button>
+            <button id="E3" onclick="enviarPosicao('E3')">E3</button>
+            <button id="E4" onclick="enviarPosicao('E4')">E4</button>
+            <button id="E5" onclick="enviarPosicao('E5')">E5</button>
+            <button id="E6" onclick="enviarPosicao('E6')">E6</button>
+            <button id="E7" onclick="enviarPosicao('E7')">E7</button>
+            <button id="E8" onclick="enviarPosicao('E8')">E8</button>
+            <button id="E9" onclick="enviarPosicao('E9')">E9</button>
+            <button id="E10" onclick="enviarPosicao('E10')">E10</button>
         </div>
         <div>
-            <button id="F1" onclick="socket.send('F1')">F1</button>
-            <button id="F2" onclick="socket.send('F2')">F2</button>
-            <button id="F3" onclick="socket.send('F3')">F3</button>
-            <button id="F4" onclick="socket.send('F4')">F4</button>
-            <button id="F5" onclick="socket.send('F5')">F5</button>
-            <button id="F6" onclick="socket.send('F6')">F6</button>
-            <button id="F7" onclick="socket.send('F7')">F7</button>
-            <button id="F8" onclick="socket.send('F8')">F8</button>
-            <button id="F9" onclick="socket.send('F9')">F9</button>
-            <button id="F10" onclick="socket.send('F10')">F10</button>
+            <button id="F1" onclick="enviarPosicao('F1')">F1</button>
+            <button id="F2" onclick="enviarPosicao('F2')">F2</button>
+            <button id="F3" onclick="enviarPosicao('F3')">F3</button>
+            <button id="F4" onclick="enviarPosicao('F4')">F4</button>
+            <button id="F5" onclick="enviarPosicao('F5')">F5</button>
+            <button id="F6" onclick="enviarPosicao('F6')">F6</button>
+            <button id="F7" onclick="enviarPosicao('F7')">F7</button>
+            <button id="F8" onclick="enviarPosicao('F8')">F8</button>
+            <button id="F9" onclick="enviarPosicao('F9')">F9</button>
+            <button id="F10" onclick="enviarPosicao('F10')">F10</button>
         </div>
         <div>
-            <button id="G1" onclick="socket.send('G1')">G1</button>
-            <button id="G2" onclick="socket.send('G2')">G2</button>
-            <button id="G3" onclick="socket.send('G3')">G3</button>
-            <button id="G4" onclick="socket.send('G4')">G4</button>
-            <button id="G5" onclick="socket.send('G5')">G5</button>
-            <button id="G6" onclick="socket.send('G6')">G6</button>
-            <button id="G7" onclick="socket.send('G7')">G7</button>
-            <button id="G8" onclick="socket.send('G8')">G8</button>
-            <button id="G9" onclick="socket.send('G9')">G9</button>
-            <button id="G10" onclick="socket.send('G10')">G10</button>
+            <button id="G1" onclick="enviarPosicao('G1')">G1</button>
+            <button id="G2" onclick="enviarPosicao('G2')">G2</button>
+            <button id="G3" onclick="enviarPosicao('G3')">G3</button>
+            <button id="G4" onclick="enviarPosicao('G4')">G4</button>
+            <button id="G5" onclick="enviarPosicao('G5')">G5</button>
+            <button id="G6" onclick="enviarPosicao('G6')">G6</button>
+            <button id="G7" onclick="enviarPosicao('G7')">G7</button>
+            <button id="G8" onclick="enviarPosicao('G8')">G8</button>
+            <button id="G9" onclick="enviarPosicao('G9')">G9</button>
+            <button id="G10" onclick="enviarPosicao('G10')">G10</button>
         </div>
         <div>
-            <button id="H1" onclick="socket.send('H1')">H1</button>
-            <button id="H2" onclick="socket.send('H2')">H2</button>
-            <button id="H3" onclick="socket.send('H3')">H3</button>
-            <button id="H4" onclick="socket.send('H4')">H4</button>
-            <button id="H5" onclick="socket.send('H5')">H5</button>
-            <button id="H6" onclick="socket.send('H6')">H6</button>
-            <button id="H7" onclick="socket.send('H7')">H7</button>
-            <button id="H8" onclick="socket.send('H8')">H8</button>
-            <button id="H9" onclick="socket.send('H9')">H9</button>
-            <button id="H10" onclick="socket.send('H10')">H10</button>
+            <button id="H1" onclick="enviarPosicao('H1')">H1</button>
+            <button id="H2" onclick="enviarPosicao('H2')">H2</button>
+            <button id="H3" onclick="enviarPosicao('H3')">H3</button>
+            <button id="H4" onclick="enviarPosicao('H4')">H4</button>
+            <button id="H5" onclick="enviarPosicao('H5')">H5</button>
+            <button id="H6" onclick="enviarPosicao('H6')">H6</button>
+            <button id="H7" onclick="enviarPosicao('H7')">H7</button>
+            <button id="H8" onclick="enviarPosicao('H8')">H8</button>
+            <button id="H9" onclick="enviarPosicao('H9')">H9</button>
+            <button id="H10" onclick="enviarPosicao('H10')">H10</button>
         </div>
         <div>
-            <button id="I1" onclick="socket.send('I1')">I1</button>
-            <button id="I2" onclick="socket.send('I2')">I2</button>
-            <button id="I3" onclick="socket.send('I3')">I3</button>
-            <button id="I4" onclick="socket.send('I4')">I4</button>
-            <button id="I5" onclick="socket.send('I5')">I5</button>
-            <button id="I6" onclick="socket.send('I6')">I6</button>
-            <button id="I7" onclick="socket.send('I7')">I7</button>
-            <button id="I8" onclick="socket.send('I8')">I8</button>
-            <button id="I9" onclick="socket.send('I9')">I9</button>
-            <button id="I10" onclick="socket.send('I10')">I10</button>
+            <button id="I1" onclick="enviarPosicao('I1')">I1</button>
+            <button id="I2" onclick="enviarPosicao('I2')">I2</button>
+            <button id="I3" onclick="enviarPosicao('I3')">I3</button>
+            <button id="I4" onclick="enviarPosicao('I4')">I4</button>
+            <button id="I5" onclick="enviarPosicao('I5')">I5</button>
+            <button id="I6" onclick="enviarPosicao('I6')">I6</button>
+            <button id="I7" onclick="enviarPosicao('I7')">I7</button>
+            <button id="I8" onclick="enviarPosicao('I8')">I8</button>
+            <button id="I9" onclick="enviarPosicao('I9')">I9</button>
+            <button id="I10" onclick="enviarPosicao('I10')">I10</button>
         </div>
         <div>
-            <button id="J1" onclick="socket.send('J1')">J1</button>
-            <button id="J2" onclick="socket.send('J2')">J2</button>
-            <button id="J3" onclick="socket.send('J3')">J3</button>
-            <button id="J4" onclick="socket.send('J4')">J4</button>
-            <button id="J5" onclick="socket.send('J5')">J5</button>
-            <button id="J6" onclick="socket.send('J6')">J6</button>
-            <button id="J7" onclick="socket.send('J7')">J7</button>
-            <button id="J8" onclick="socket.send('J8')">J8</button>
-            <button id="J9" onclick="socket.send('J9')">J9</button>
-            <button id="J10" onclick="socket.send('J10')">J10</button>
+            <button id="J1" onclick="enviarPosicao('J1')">J1</button>
+            <button id="J2" onclick="enviarPosicao('J2')">J2</button>
+            <button id="J3" onclick="enviarPosicao('J3')">J3</button>
+            <button id="J4" onclick="enviarPosicao('J4')">J4</button>
+            <button id="J5" onclick="enviarPosicao('J5')">J5</button>
+            <button id="J6" onclick="enviarPosicao('J6')">J6</button>
+            <button id="J7" onclick="enviarPosicao('J7')">J7</button>
+            <button id="J8" onclick="enviarPosicao('J8')">J8</button>
+            <button id="J9" onclick="enviarPosicao('J9')">J9</button>
+            <button id="J10" onclick="enviarPosicao('J10')">J10</button>
         </div>
     </div>
     <div id="regras">
@@ -156,6 +157,29 @@
 
 
     <script>
+
+        let contador_embarcacoes = 0;
+        enviarPosicao = (posicao) => {
+            if (contador_embarcacoes >= 32) {
+                alert('Você já adicionou todas as embarcações');
+                return;
+            } else {
+                socket.send(posicao);
+                contador_embarcacoes++;
+                if (contador_embarcacoes <= 5) {
+                    document.getElementById(posicao).style.backgroundColor = 'yellow';
+                } else if (contador_embarcacoes > 5 && contador_embarcacoes <= 13) {
+                    document.getElementById(posicao).style.backgroundColor = 'red';
+                } else if (contador_embarcacoes > 13 && contador_embarcacoes <= 22) {
+                    document.getElementById(posicao).style.backgroundColor = 'blue';
+                } else if (contador_embarcacoes > 22 && contador_embarcacoes <= 26) {
+                    document.getElementById(posicao).style.backgroundColor = 'green';
+                } else if (contador_embarcacoes > 26 && contador_embarcacoes <= 32) {
+                    document.getElementById(posicao).style.backgroundColor = 'orange';
+                }
+                return;
+            }
+        };
 
         const socket = new WebSocket('ws://localhost:8080');
 
@@ -168,10 +192,14 @@
             //verificando jogadores
             if (message == 'Você é o player1') {
                 document.getElementById('player').innerHTML = message;
-            }else if (message == 'Você é o player2'){
+            } else if (message == 'Você é o player2') {
                 document.getElementById('player').innerHTML = message;
-            }else if (message == 'Aguardando oponente...'){
+            } else if (message == 'Aguardando oponente...') {
                 document.getElementById('player').innerHTML = message;
+            }
+            //setando timer
+            if (message.includes('Tempo da partida')) {
+                document.getElementById('time').innerHTML = message;
             }
             //verificando momento do jogo
             if (message == 'Momento 1: Adicione suas embarcações no tabuleiro') {
@@ -179,8 +207,6 @@
                 const buttons = document.querySelectorAll('button');
                 buttons.forEach(button => button.style.display = 'inline-block');
                 document.getElementById('regras').style.display = 'inline-block';
-            } else if (message == 'Momento 1: O player1 está adicionando as embarcações') {
-                document.getElementById('message').innerHTML = message;
             }
 
 
