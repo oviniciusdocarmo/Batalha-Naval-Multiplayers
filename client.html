@@ -218,8 +218,8 @@
 
         enviarPosicao = (posicao) => {
 
-            if (validaPosicao(posicao)) {
-                if (!momento_2) {
+            if (!momento_2) {
+                if (validaPosicao(posicao)) {
                     socket.send(posicao);
                     contador_embarcacoes++;
                     if (contador_embarcacoes <= 5) {
@@ -233,34 +233,34 @@
                     } else if (contador_embarcacoes > 26 && contador_embarcacoes <= 32) {
                         document.getElementById(posicao).style.backgroundColor = 'orange';
                     }
-                } else {
-                    socket.send(posicao);
-
-                    socket.onmessage = (event) => {
-                        const message = event.data.toString();
-                        if (message.includes('Acertou!')) {
-                            document.getElementById('message').innerHTML = message;
-                            document.getElementById('message').style.backgroundColor = 'green';
-                            document.getElementById(posicao).style.backgroundColor = 'green';
-                        } else if (message.includes('Errou!')) {
-                            document.getElementById('message').innerHTML = message;
-                            document.getElementById('message').style.backgroundColor = 'red';
-                            document.getElementById(posicao).style.backgroundColor = 'red';
-                        }
-                        //momento 3
-                        if (message.includes('Fim de jogo!')) {
-                            document.getElementById('message').innerHTML = 'Momento 3: Fim de jogo!';
-                            document.getElementById('message').style.backgroundColor = 'white';
-                            document.getElementById('vencedor').innerHTML = `MOMENTO 3: ${message}`;
-                            document.getElementById('vencedor').style.alignContent = 'center';
-                            const buttons = document.querySelectorAll('button');
-                            buttons.forEach(button => {
-                                button.style.display = 'none';
-                            });
-                        }
-                    }
-                    contador_embarcacoes++;
                 }
+            } else {
+                socket.send(posicao);
+
+                socket.onmessage = (event) => {
+                    const message = event.data.toString();
+                    if (message.includes('Acertou!')) {
+                        document.getElementById('message').innerHTML = message;
+                        document.getElementById('message').style.backgroundColor = 'green';
+                        document.getElementById(posicao).style.backgroundColor = 'green';
+                    } else if (message.includes('Errou!')) {
+                        document.getElementById('message').innerHTML = message;
+                        document.getElementById('message').style.backgroundColor = 'red';
+                        document.getElementById(posicao).style.backgroundColor = 'red';
+                    }
+                    //momento 3
+                    if (message.includes('Fim de jogo!')) {
+                        document.getElementById('message').innerHTML = 'Momento 3: Fim de jogo!';
+                        document.getElementById('message').style.backgroundColor = 'white';
+                        document.getElementById('vencedor').innerHTML = `MOMENTO 3: ${message}`;
+                        document.getElementById('vencedor').style.alignContent = 'center';
+                        const buttons = document.querySelectorAll('button');
+                        buttons.forEach(button => {
+                            button.style.display = 'none';
+                        });
+                    }
+                }
+                contador_embarcacoes++;
             }
             return;
         };
