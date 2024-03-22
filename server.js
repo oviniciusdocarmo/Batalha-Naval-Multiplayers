@@ -43,28 +43,90 @@ server.on('connection', (socket) => {
         // Initialize tabuleiro array for the current game
         tabuleiro['player1'] = [];
         player1.on('message', (message) => {
-            //armazenar as 32 posições do tabuleiro
-            if (tabuleiro['player1'].length <= 32) {
+            //armazenar as 5 posições do tabuleiro
+            if (tabuleiro['player1'].length <= 5) {
                 tabuleiro['player1'].push(message.toString());
+                if (tabuleiro['player1'].length == 5) {
+                    startMomento2();
+                }
             }
         });
         tabuleiro['player2'] = [];
         player2.on('message', (message) => {
-            //armazenar as 32 posições do tabuleiro
-            if (tabuleiro['player2'].length <= 32) {
+            //armazenar as 5 posições do tabuleiro
+            if (tabuleiro['player2'].length <= 5) {
                 tabuleiro['player2'].push(message.toString());
+                if (tabuleiro['player2'].length == 5) {
+                    startMomento2();
+                }
             }
         });
+        //momento 2: atirar no tabuleiro
+        let player1_acertos = 0;
+        let player2_acertos = 0;
+        function startMomento2() {
+            if (!(tabuleiro['player1'].length === 5)) {
+                player2.send('Aguarde o oponente adicionar suas embarcações');
+                return;
+            }
+            if (!(tabuleiro['player2'].length === 5)) {
+                player1.send('Aguarde o oponente adicionar suas embarcações');
+                return;
+            }
+            //momento 2: atirar no tabuleiro
+            if (tabuleiro['player1'].length === 5 && tabuleiro['player2'].length === 5) {
+                console.log('Momento 2...');
+                player1.send('Momento 2: Atire no tabuleiro do oponente');
+                player1.send('vez do player1');
+                player2.send('vez do player1');
+                player2.send('Momento 2: Atire no tabuleiro do oponente');
+                player1.on('message', (message) => {
+                    player1.send('vez do player2');
+                    player2.send('vez do player2');
+                    if (tabuleiro['player2'].includes(message.toString())) {
+                        player1.send('Acertou!');
+                        player2.send('Você foi atingido!');
+                        player1_acertos++;
+                    } else {
+                        player1.send('Errou!');
+                        player2.send('Você escapou!');
+                    }
+                    if (player1_acertos === 5) {
+                        startMomento3('player1');
+                    }
+                });
+                player2.on('message', (message) => {
+                    player1.send('vez do player1');
+                    player2.send('vez do player1');
+                    if (tabuleiro['player1'].includes(message.toString())) {
+                        player2.send('Acertou!');
+                        player1.send('Você foi atingido!');
+                        player2_acertos++;
+                    } else {
+                        player2.send('Errou!');
+                        player1.send('Você escapou!');
+                    }
+                    if (player2_acertos === 5) {
+                        startMomento3('player2');
+                    }
+                });
+                //adicionando tempo da partida
+                time.push({ id: gameId, time: 0 });
+                setInterval(() => {
+                    time[gameId].time++;
+                    player1.send(`Tempo da partida: ${time[gameId].time}s`, 'time');
+                    player2.send(`Tempo da partida: ${time[gameId].time}s`, 'time');
+                }, 1000);
+            }
+        };
 
-
-        //adicionando tempo da partida
-        time.push({ id: gameId, time: 0 });
-        setInterval(() => {
-            time[gameId].time++;
-            player1.send(`Tempo da partida: ${time[gameId].time}s`, 'time');
-            player2.send(`Tempo da partida: ${time[gameId].time}s`, 'time');
-        }, 1000);
-
-        // Implemente a lógica de jogo para configurar os tabuleiros e gerenciar os turnos aqui
+        //momento 3: finalizar jogo
+        function startMomento3(vencendor) {
+            console.log('Momento 3...');
+            player1.send(`Fim de jogo! O vencedor é o ${vencendor}`);
+            player2.send(`Fim de jogo! O vencedor é o ${vencendor}`);
+            player1.close();
+            player2.close();
+        };
     }
 });

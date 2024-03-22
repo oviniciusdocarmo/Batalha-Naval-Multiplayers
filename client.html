@@ -27,6 +27,7 @@
     <div id="time"></div>
     <div id="player"></div>
     <div id="message"></div></br>
+    <div id="current_player"></div></br>
     <div class="container">
         <div>
             <button id="A1" onclick="enviarPosicao('A1')">A1</button>
@@ -159,11 +160,10 @@
     <script>
 
         let contador_embarcacoes = 0;
+        let momento_2 = false;
+        let player = '';
         enviarPosicao = (posicao) => {
-            if (contador_embarcacoes >= 32) {
-                alert('Você já adicionou todas as embarcações');
-                return;
-            } else {
+            if (!momento_2) {
                 socket.send(posicao);
                 contador_embarcacoes++;
                 if (contador_embarcacoes <= 5) {
@@ -174,11 +174,49 @@
                     document.getElementById(posicao).style.backgroundColor = 'blue';
                 } else if (contador_embarcacoes > 22 && contador_embarcacoes <= 26) {
                     document.getElementById(posicao).style.backgroundColor = 'green';
-                } else if (contador_embarcacoes > 26 && contador_embarcacoes <= 32) {
+                } else if (contador_embarcacoes > 26 && contador_embarcacoes <= 5) {
                     document.getElementById(posicao).style.backgroundColor = 'orange';
                 }
-                return;
+            } else {
+                socket.send(posicao);
+
+                socket.onmessage = (event) => {
+                    const message = event.data.toString();
+                    if (message.includes('Acertou!')) {
+                        document.getElementById('message').innerHTML = message;
+                        document.getElementById('message').style.backgroundColor = 'green';
+                        document.getElementById(posicao).style.backgroundColor = 'green';
+
+                        document.getElementById('current_player').innerHTML = 'Aguarde o oponente atirar';
+                        const buttons = document.querySelectorAll('button');
+                        buttons.forEach(button => button.style.display = 'none');
+                        if (player == message) {
+                            document.getElementById('current_player').innerHTML = 'Sua vez de atirar';
+                            buttons.forEach(button => {
+                                button.style.display = 'inline-block';
+                                button.style.backgroundColor = 'white';
+                            });
+                        }
+                    } else if (message.includes('Errou!')) {
+                        document.getElementById('message').innerHTML = message;
+                        document.getElementById('message').style.backgroundColor = 'red';
+                        document.getElementById(posicao).style.backgroundColor = 'red';
+
+                        document.getElementById('current_player').innerHTML = 'Aguarde o oponente atirar';
+                        const buttons = document.querySelectorAll('button');
+                        buttons.forEach(button => button.style.display = 'none');
+                        if (player == message) {
+                            document.getElementById('current_player').innerHTML = 'Sua vez de atirar';
+                            buttons.forEach(button => {
+                                button.style.display = 'inline-block';
+                                button.style.backgroundColor = 'white';
+                            });
+                        }
+                    }
+                }
+                contador_embarcacoes++;
             }
+            return;
         };
 
         const socket = new WebSocket('ws://localhost:8080');
@@ -191,8 +229,10 @@
             const message = event.data.toString();
             //verificando jogadores
             if (message == 'Você é o player1') {
+                player = 'vez do player1';
                 document.getElementById('player').innerHTML = message;
             } else if (message == 'Você é o player2') {
+                player = 'vez do player2';
                 document.getElementById('player').innerHTML = message;
             } else if (message == 'Aguardando oponente...') {
                 document.getElementById('player').innerHTML = message;
@@ -201,18 +241,61 @@
             if (message.includes('Tempo da partida')) {
                 document.getElementById('time').innerHTML = message;
             }
+
             //verificando momento do jogo
+            //momento 1
             if (message == 'Momento 1: Adicione suas embarcações no tabuleiro') {
                 document.getElementById('message').innerHTML = message;
                 const buttons = document.querySelectorAll('button');
                 buttons.forEach(button => button.style.display = 'inline-block');
                 document.getElementById('regras').style.display = 'inline-block';
             }
-
-
-            if (message == 'momento 2') {
+            if (message == 'Aguarde o oponente adicionar suas embarcações') {
+                document.getElementById('message').innerHTML = message;
                 const buttons = document.querySelectorAll('button');
                 buttons.forEach(button => button.style.display = 'none');
+            }
+            //momento 2
+            if (message == 'Momento 2: Atire no tabuleiro do oponente') {
+                document.getElementById('message').innerHTML = message;
+
+                contador_embarcacoes = 0;
+                momento_2 = true;
+            }
+            if (message.includes('Você foi atingido!')) {
+                document.getElementById('status').innerHTML = message;
+                document.getElementById('status').style.backgroundColor = 'red';
+            }
+            if (message.includes('Você escapou!')) {
+                document.getElementById('status').innerHTML = message;
+                document.getElementById('status').style.backgroundColor = 'green';
+            }
+            //verificar current player
+            if (message == 'vez do player1') {
+                console.log("1  ", player, "  ", message);
+                document.getElementById('current_player').innerHTML = 'Aguarde o oponente atirar';
+                const buttons = document.querySelectorAll('button');
+                buttons.forEach(button => button.style.display = 'none');
+                if (player == message) {
+                    document.getElementById('current_player').innerHTML = 'Sua vez de atirar';
+                    buttons.forEach(button => {
+                        button.style.display = 'inline-block';
+                        button.style.backgroundColor = 'white';
+                    });
+                }
+            }
+            if (message == 'vez do player2') {
+                console.log("2  ", player, "  ", message);
+                document.getElementById('current_player').innerHTML = 'Aguarde o oponente atirar';
+                const buttons = document.querySelectorAll('button');
+                buttons.forEach(button => button.style.display = 'none');
+                if (player == message) {
+                    document.getElementById('current_player').innerHTML = 'Sua vez de atirar';
+                    buttons.forEach(button => {
+                        button.style.display = 'inline-block';
+                        button.style.backgroundColor = 'white';
+                    });
+                }
             }
         };
 
