@@ -182,7 +182,6 @@
             function verificarPosicaoAdjacente(posicao, cor, mensagemErro) {
                 const posicaoAnterior = String.fromCharCode(posicao.charCodeAt(0)) + (parseInt(posicao.charAt(1)) - 1);
                 const proximaPosicao = String.fromCharCode(posicao.charCodeAt(0)) + (parseInt(posicao.charAt(1)) + 1);
-                console.log(posicaoAnterior, proximaPosicao);
 
                 const posicaoAnteriorElement = document.getElementById(posicaoAnterior);
                 const proximaPosicaoElement = document.getElementById(proximaPosicao);
@@ -195,6 +194,19 @@
                     return false;
                 }
             }
+            function verificarPosicaoHidroAviao(posicao, cor, mensagemErro) {
+                // TODO
+                //    |   |  2 |   | 2 |   |   |
+                //    | 3 |    | 1 |   | 3 |   |
+                //    |   |    |   |   |   |   |
+                // Se a posição for 1, a próxima posição for 2, a próxima posição so pode ser 3
+                // Resultando em
+                //    |   |    |   | 2 |   |   |
+                //    |   |    | 1 |   | 3 |   |
+                //    |   |    |   |   |   |   |
+
+                return true;
+            }
 
             if (contador_embarcacoes > 0 && contador_embarcacoes < 5) {
                 return verificarPosicaoAdjacente(posicao, "yellow", "A próxima posição deve ser adjacente a uma posição amarela.");
@@ -204,8 +216,13 @@
                 return verificarPosicaoAdjacente(posicao, "red", "A próxima posição deve ser adjacente a uma posição vermelha.");
             }
             //TODO adicionar para hidroaviao 13-16 16-19 19-22
-            else if (contador_embarcacoes > 26 && contador_embarcacoes < 28) {
-                console.log('oii');
+            else if (contador_embarcacoes > 13 && contador_embarcacoes < 16) {
+                return verificarPosicaoHidroAviao(posicao, "blue", "A próxima posição deve ser adjacente a uma posição azul.");
+            } else if (contador_embarcacoes > 16 && contador_embarcacoes < 19) {
+                return verificarPosicaoHidroAviao(posicao, "blue", "A próxima posição deve ser adjacente a uma posição azul.");
+            } else if (contador_embarcacoes > 19 && contador_embarcacoes < 22) {
+                return verificarPosicaoHidroAviao(posicao, "blue", "A próxima posição deve ser adjacente a uma posição azul.");
+            } else if (contador_embarcacoes > 26 && contador_embarcacoes < 28) {
                 return verificarPosicaoAdjacente(posicao, "orange", "A próxima posição deve ser adjacente a uma posição laranja.");
             } else if (contador_embarcacoes > 28 && contador_embarcacoes < 30) {
                 return verificarPosicaoAdjacente(posicao, "orange", "A próxima posição deve ser adjacente a uma posição laranja.");
