@@ -28,6 +28,7 @@
     <div id="player"></div>
     <div id="message"></div></br>
     <div id="current_player"></div></br>
+    <h1 id="vencedor"></h1>
     <div class="container">
         <div>
             <button id="A1" onclick="enviarPosicao('A1')">A1</button>
@@ -174,7 +175,7 @@
                     document.getElementById(posicao).style.backgroundColor = 'blue';
                 } else if (contador_embarcacoes > 22 && contador_embarcacoes <= 26) {
                     document.getElementById(posicao).style.backgroundColor = 'green';
-                } else if (contador_embarcacoes > 26 && contador_embarcacoes <= 5) {
+                } else if (contador_embarcacoes > 26 && contador_embarcacoes <= 32) {
                     document.getElementById(posicao).style.backgroundColor = 'orange';
                 }
             } else {
@@ -186,32 +187,21 @@
                         document.getElementById('message').innerHTML = message;
                         document.getElementById('message').style.backgroundColor = 'green';
                         document.getElementById(posicao).style.backgroundColor = 'green';
-
-                        document.getElementById('current_player').innerHTML = 'Aguarde o oponente atirar';
-                        const buttons = document.querySelectorAll('button');
-                        buttons.forEach(button => button.style.display = 'none');
-                        if (player == message) {
-                            document.getElementById('current_player').innerHTML = 'Sua vez de atirar';
-                            buttons.forEach(button => {
-                                button.style.display = 'inline-block';
-                                button.style.backgroundColor = 'white';
-                            });
-                        }
                     } else if (message.includes('Errou!')) {
                         document.getElementById('message').innerHTML = message;
                         document.getElementById('message').style.backgroundColor = 'red';
                         document.getElementById(posicao).style.backgroundColor = 'red';
-
-                        document.getElementById('current_player').innerHTML = 'Aguarde o oponente atirar';
+                    }
+                    //momento 3
+                    if (message.includes('Fim de jogo!')) {
+                        document.getElementById('message').innerHTML = 'Momento 3: Fim de jogo!';
+                        document.getElementById('message').style.backgroundColor = 'white';
+                        document.getElementById('vencedor').innerHTML = `MOMENTO 3: ${message}`;
+                        document.getElementById('vencedor').style.alignContent = 'center';
                         const buttons = document.querySelectorAll('button');
-                        buttons.forEach(button => button.style.display = 'none');
-                        if (player == message) {
-                            document.getElementById('current_player').innerHTML = 'Sua vez de atirar';
-                            buttons.forEach(button => {
-                                button.style.display = 'inline-block';
-                                button.style.backgroundColor = 'white';
-                            });
-                        }
+                        buttons.forEach(button => {
+                            button.style.display = 'none';
+                        });
                     }
                 }
                 contador_embarcacoes++;
@@ -258,7 +248,11 @@
             //momento 2
             if (message == 'Momento 2: Atire no tabuleiro do oponente') {
                 document.getElementById('message').innerHTML = message;
-
+                const buttons = document.querySelectorAll('button');
+                buttons.forEach(button => {
+                    button.style.display = 'inline-block';
+                    button.style.backgroundColor = 'white';
+                });
                 contador_embarcacoes = 0;
                 momento_2 = true;
             }
@@ -270,32 +264,17 @@
                 document.getElementById('status').innerHTML = message;
                 document.getElementById('status').style.backgroundColor = 'green';
             }
-            //verificar current player
-            if (message == 'vez do player1') {
-                console.log("1  ", player, "  ", message);
-                document.getElementById('current_player').innerHTML = 'Aguarde o oponente atirar';
+
+            //momento 3
+            if (message.includes('Fim de jogo!')) {
+                document.getElementById('message').innerHTML = 'Momento 3: Fim de jogo!';
+                document.getElementById('message').style.backgroundColor = 'white';
+                document.getElementById('vencedor').innerHTML = `MOMENTO 3: ${message}`;
+                document.getElementById('vencedor').style.alignContent = 'center';
                 const buttons = document.querySelectorAll('button');
-                buttons.forEach(button => button.style.display = 'none');
-                if (player == message) {
-                    document.getElementById('current_player').innerHTML = 'Sua vez de atirar';
-                    buttons.forEach(button => {
-                        button.style.display = 'inline-block';
-                        button.style.backgroundColor = 'white';
-                    });
-                }
-            }
-            if (message == 'vez do player2') {
-                console.log("2  ", player, "  ", message);
-                document.getElementById('current_player').innerHTML = 'Aguarde o oponente atirar';
-                const buttons = document.querySelectorAll('button');
-                buttons.forEach(button => button.style.display = 'none');
-                if (player == message) {
-                    document.getElementById('current_player').innerHTML = 'Sua vez de atirar';
-                    buttons.forEach(button => {
-                        button.style.display = 'inline-block';
-                        button.style.backgroundColor = 'white';
-                    });
-                }
+                buttons.forEach(button => {
+                    button.style.display = 'none';
+                });
             }
         };
 
