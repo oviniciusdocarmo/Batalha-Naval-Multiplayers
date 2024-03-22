@@ -30,11 +30,23 @@ server.on('connection', (socket) => {
         player1.on('close', function close() {
             console.log('O player 1 se desconectou');
             player2.send('O player 1 se desconectou');
+            player1.close();
+            player2.close();
+            //remover o jogo da lista de jogos
+            games = games.filter(game => game.id !== gameId);
+            //remover o tempo da partida
+            time = time.filter(t => t.id !== gameId);
         });
 
         player2.on('close', function close() {
             console.log('O player 2 se desconectou');
             player1.send('O player 2 se desconectou');
+            player1.close();
+            player2.close();
+            //remover o jogo da lista de jogos
+            games = games.filter(game => game.id !== gameId);
+            //remover o tempo da partida
+            time = time.filter(t => t.id !== gameId);
         });
 
         //momento 1: adicionando navios no tabuleiro
@@ -113,9 +125,11 @@ server.on('connection', (socket) => {
         //adicionando tempo da partida
         time.push({ id: gameId, time: 0 });
         setInterval(() => {
-            time[gameId].time++;
-            player1.send(`Tempo da partida: ${time[gameId].time}s`, 'time');
-            player2.send(`Tempo da partida: ${time[gameId].time}s`, 'time');
+            if (time[gameId]) {
+                time[gameId].time++;
+                player1.send(`Tempo da partida: ${time[gameId].time}s`, 'time');
+                player2.send(`Tempo da partida: ${time[gameId].time}s`, 'time');
+            }
         }, 1000);
 
         //momento 3: finalizar jogo
@@ -125,6 +139,10 @@ server.on('connection', (socket) => {
             player2.send(`Fim de jogo! O vencedor é o ${vencendor}`);
             player1.close();
             player2.close();
+            //remover o jogo da lista de jogos
+            games = games.filter(game => game.id !== gameId);
+            //remover o tempo da partida
+            time = time.filter(t => t.id !== gameId);
         };
     }
 });
