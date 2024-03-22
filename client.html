@@ -163,48 +163,87 @@
         let contador_embarcacoes = 0;
         let momento_2 = false;
         let player = '';
-        enviarPosicao = (posicao) => {
-            if (!momento_2) {
-                socket.send(posicao);
-                contador_embarcacoes++;
-                if (contador_embarcacoes <= 5) {
-                    document.getElementById(posicao).style.backgroundColor = 'yellow';
-                } else if (contador_embarcacoes > 5 && contador_embarcacoes <= 13) {
-                    document.getElementById(posicao).style.backgroundColor = 'red';
-                } else if (contador_embarcacoes > 13 && contador_embarcacoes <= 22) {
-                    document.getElementById(posicao).style.backgroundColor = 'blue';
-                } else if (contador_embarcacoes > 22 && contador_embarcacoes <= 26) {
-                    document.getElementById(posicao).style.backgroundColor = 'green';
-                } else if (contador_embarcacoes > 26 && contador_embarcacoes <= 32) {
-                    document.getElementById(posicao).style.backgroundColor = 'orange';
-                }
-            } else {
-                socket.send(posicao);
 
-                socket.onmessage = (event) => {
-                    const message = event.data.toString();
-                    if (message.includes('Acertou!')) {
-                        document.getElementById('message').innerHTML = message;
-                        document.getElementById('message').style.backgroundColor = 'green';
-                        document.getElementById(posicao).style.backgroundColor = 'green';
-                    } else if (message.includes('Errou!')) {
-                        document.getElementById('message').innerHTML = message;
-                        document.getElementById('message').style.backgroundColor = 'red';
-                        document.getElementById(posicao).style.backgroundColor = 'red';
-                    }
-                    //momento 3
-                    if (message.includes('Fim de jogo!')) {
-                        document.getElementById('message').innerHTML = 'Momento 3: Fim de jogo!';
-                        document.getElementById('message').style.backgroundColor = 'white';
-                        document.getElementById('vencedor').innerHTML = `MOMENTO 3: ${message}`;
-                        document.getElementById('vencedor').style.alignContent = 'center';
-                        const buttons = document.querySelectorAll('button');
-                        buttons.forEach(button => {
-                            button.style.display = 'none';
-                        });
-                    }
+        // Função para restringir as posições das embarcações
+        function validaPosicao(posicao) {
+            posicao = posicao.toUpperCase();
+            // Verificando se a posição é válida
+            if (!posicao.match(/^[A-J]([1-9]|10)$/)) {
+                alert("Posição inválida. Por favor, escolha uma posição válida de A1 a J10.");
+                return false;
+            }
+            // Verificando se a posição já foi ocupada
+            if (document.getElementById(posicao).style.backgroundColor !== ""
+                && document.getElementById(posicao).style.backgroundColor !== "white") {
+                alert("Esta posição já foi ocupada. Por favor, escolha outra posição.");
+                return false;
+            }
+
+            // Verificando se a próxima posição pode ser amarela (adjacente na horizontal)
+            if (contador_embarcacoes > 0 && contador_embarcacoes <= 5) {
+                const posicaoAnterior = String.fromCharCode(posicao.charCodeAt(0)) + (parseInt(posicao.charAt(1)) - 1);
+                const proximaPosicao = String.fromCharCode(posicao.charCodeAt(0)) + (parseInt(posicao.charAt(1)) + 1);
+                console.log(posicaoAnterior, proximaPosicao);
+
+                const posicaoAnteriorElement = document.getElementById(posicaoAnterior);
+                const proximaPosicaoElement = document.getElementById(proximaPosicao);
+
+                if ((posicaoAnteriorElement && posicaoAnteriorElement.style.backgroundColor === "yellow") ||
+                    (proximaPosicaoElement && proximaPosicaoElement.style.backgroundColor === "yellow")) {
+                    return true; // Permite apenas se a posição anterior ou a próxima for amarela
+                } else {
+                    alert("A próxima posição deve ser adjacente a uma posição amarela.");
+                    return false;
                 }
-                contador_embarcacoes++;
+            }
+            return true;
+        }
+
+        enviarPosicao = (posicao) => {
+
+            if (validaPosicao(posicao)) {
+                if (!momento_2) {
+                    socket.send(posicao);
+                    contador_embarcacoes++;
+                    if (contador_embarcacoes <= 5) {
+                        document.getElementById(posicao).style.backgroundColor = 'yellow';
+                    } else if (contador_embarcacoes > 5 && contador_embarcacoes <= 13) {
+                        document.getElementById(posicao).style.backgroundColor = 'red';
+                    } else if (contador_embarcacoes > 13 && contador_embarcacoes <= 22) {
+                        document.getElementById(posicao).style.backgroundColor = 'blue';
+                    } else if (contador_embarcacoes > 22 && contador_embarcacoes <= 26) {
+                        document.getElementById(posicao).style.backgroundColor = 'green';
+                    } else if (contador_embarcacoes > 26 && contador_embarcacoes <= 32) {
+                        document.getElementById(posicao).style.backgroundColor = 'orange';
+                    }
+                } else {
+                    socket.send(posicao);
+
+                    socket.onmessage = (event) => {
+                        const message = event.data.toString();
+                        if (message.includes('Acertou!')) {
+                            document.getElementById('message').innerHTML = message;
+                            document.getElementById('message').style.backgroundColor = 'green';
+                            document.getElementById(posicao).style.backgroundColor = 'green';
+                        } else if (message.includes('Errou!')) {
+                            document.getElementById('message').innerHTML = message;
+                            document.getElementById('message').style.backgroundColor = 'red';
+                            document.getElementById(posicao).style.backgroundColor = 'red';
+                        }
+                        //momento 3
+                        if (message.includes('Fim de jogo!')) {
+                            document.getElementById('message').innerHTML = 'Momento 3: Fim de jogo!';
+                            document.getElementById('message').style.backgroundColor = 'white';
+                            document.getElementById('vencedor').innerHTML = `MOMENTO 3: ${message}`;
+                            document.getElementById('vencedor').style.alignContent = 'center';
+                            const buttons = document.querySelectorAll('button');
+                            buttons.forEach(button => {
+                                button.style.display = 'none';
+                            });
+                        }
+                    }
+                    contador_embarcacoes++;
+                }
             }
             return;
         };

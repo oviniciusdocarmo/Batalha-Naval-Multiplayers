@@ -1,7 +1,7 @@
 const WebSocket = require('ws');
 const server = new WebSocket.Server({ port: 8080 });
 
-const LENGTH_EMBARCACOES = 6;
+const LENGTH_EMBARCACOES = 32;
 let players = [];
 let games = [];
 let time = [];
