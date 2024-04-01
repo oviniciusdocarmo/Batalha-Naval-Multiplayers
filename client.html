@@ -267,38 +267,38 @@
         };
 
         socket.onmessage = (event) => {
-            const message = event.data.toString();
+            const data = JSON.parse(event.data);
             //verificando jogadores
-            if (message == 'Você é o player1') {
+            if (data.message == 'Você é o player1') {
                 player = 'vez do player1';
-                document.getElementById('player').innerHTML = message;
-            } else if (message == 'Você é o player2') {
+                document.getElementById('player').innerHTML = data.message;
+            } else if (data.message == 'Você é o player2') {
                 player = 'vez do player2';
-                document.getElementById('player').innerHTML = message;
-            } else if (message == 'Aguardando oponente...') {
-                document.getElementById('player').innerHTML = message;
+                document.getElementById('player').innerHTML = data.message;
+            } else if (data.message == 'Aguardando oponente...') {
+                document.getElementById('player').innerHTML = data.message;
             }
             //setando timer
-            if (message.includes('Tempo da partida')) {
-                document.getElementById('time').innerHTML = message;
+            if (data.message.includes('Tempo da partida')) {
+                document.getElementById('time').innerHTML = data.message;
             }
 
             //verificando momento do jogo
             //momento 1
-            if (message == 'Momento 1: Adicione suas embarcações no tabuleiro') {
-                document.getElementById('message').innerHTML = message;
+            if (data.message == 'Momento 1: Adicione suas embarcações no tabuleiro') {
+                document.getElementById('message').innerHTML = data.message;
                 const buttons = document.querySelectorAll('button');
                 buttons.forEach(button => button.style.display = 'inline-block');
                 document.getElementById('regras').style.display = 'inline-block';
             }
-            if (message == 'Aguarde o oponente adicionar suas embarcações') {
-                document.getElementById('message').innerHTML = message;
+            if (data.message == 'Aguarde o oponente adicionar suas embarcações') {
+                document.getElementById('message').innerHTML = data.message;
                 const buttons = document.querySelectorAll('button');
                 buttons.forEach(button => button.style.display = 'none');
             }
             //momento 2
-            if (message == 'Momento 2: Atire no tabuleiro do oponente') {
-                document.getElementById('message').innerHTML = message;
+            if (data.message == 'Momento 2: Atire no tabuleiro do oponente') {
+                document.getElementById('message').innerHTML = data.message;
                 const buttons = document.querySelectorAll('button');
                 buttons.forEach(button => {
                     button.style.display = 'inline-block';
@@ -307,30 +307,30 @@
                 contador_embarcacoes = 0;
                 momento_2 = true;
             }
-            if (message.includes('Você foi atingido!')) {
-                document.getElementById('status').innerHTML = message;
+            if (data.message.includes('Você foi atingido!')) {
+                document.getElementById('status').innerHTML = data.message;
                 document.getElementById('status').style.backgroundColor = 'red';
             }
-            if (message.includes('Você escapou!')) {
-                document.getElementById('status').innerHTML = message;
+            if (data.message.includes('Você escapou!')) {
+                document.getElementById('status').innerHTML = data.message;
                 document.getElementById('status').style.backgroundColor = 'green';
             }
-            if (message.includes('Acertou!')) {
-                document.getElementById('message').innerHTML = message;
+            if (data.message.includes('Acertou!')) {
+                document.getElementById('message').innerHTML = data.message;
                 document.getElementById('message').style.backgroundColor = 'green';
                 document.getElementById(ultima_posicao_atacada).style.backgroundColor = 'green';
             }
-            if (message.includes('Errou!')) {
-                document.getElementById('message').innerHTML = message;
+            if (data.message.includes('Errou!')) {
+                document.getElementById('message').innerHTML = data.message;
                 document.getElementById('message').style.backgroundColor = 'red';
                 document.getElementById(ultima_posicao_atacada).style.backgroundColor = 'red';
             }
 
             //momento 3
-            if (message.includes('Fim de jogo!')) {
+            if (data.message.includes('Fim de jogo!')) {
                 document.getElementById('message').innerHTML = 'Momento 3: Fim de jogo!';
                 document.getElementById('message').style.backgroundColor = 'white';
-                document.getElementById('vencedor').innerHTML = `MOMENTO 3: ${message}`;
+                document.getElementById('vencedor').innerHTML = `MOMENTO 3: ${data.message}`;
                 document.getElementById('vencedor').style.alignContent = 'center';
                 const buttons = document.querySelectorAll('button');
                 buttons.forEach(button => {
