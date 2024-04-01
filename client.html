@@ -163,6 +163,7 @@
         let contador_embarcacoes = 0;
         let momento_2 = false;
         let player = '';
+        let ultima_posicao_atacada = '';
 
         // Função para restringir as posições das embarcações
         function validaPosicao(posicao) {
@@ -253,30 +254,7 @@
                 }
             } else {
                 socket.send(posicao);
-
-                socket.onmessage = (event) => {
-                    const message = event.data.toString();
-                    if (message.includes('Acertou!')) {
-                        document.getElementById('message').innerHTML = message;
-                        document.getElementById('message').style.backgroundColor = 'green';
-                        document.getElementById(posicao).style.backgroundColor = 'green';
-                    } else if (message.includes('Errou!')) {
-                        document.getElementById('message').innerHTML = message;
-                        document.getElementById('message').style.backgroundColor = 'red';
-                        document.getElementById(posicao).style.backgroundColor = 'red';
-                    }
-                    //momento 3
-                    if (message.includes('Fim de jogo!')) {
-                        document.getElementById('message').innerHTML = 'Momento 3: Fim de jogo!';
-                        document.getElementById('message').style.backgroundColor = 'white';
-                        document.getElementById('vencedor').innerHTML = `MOMENTO 3: ${message}`;
-                        document.getElementById('vencedor').style.alignContent = 'center';
-                        const buttons = document.querySelectorAll('button');
-                        buttons.forEach(button => {
-                            button.style.display = 'none';
-                        });
-                    }
-                }
+                ultima_posicao_atacada = posicao;
                 contador_embarcacoes++;
             }
             return;
@@ -336,6 +314,16 @@
             if (message.includes('Você escapou!')) {
                 document.getElementById('status').innerHTML = message;
                 document.getElementById('status').style.backgroundColor = 'green';
+            }
+            if (message.includes('Acertou!')) {
+                document.getElementById('message').innerHTML = message;
+                document.getElementById('message').style.backgroundColor = 'green';
+                document.getElementById(ultima_posicao_atacada).style.backgroundColor = 'green';
+            }
+            if (message.includes('Errou!')) {
+                document.getElementById('message').innerHTML = message;
+                document.getElementById('message').style.backgroundColor = 'red';
+                document.getElementById(ultima_posicao_atacada).style.backgroundColor = 'red';
             }
 
             //momento 3
