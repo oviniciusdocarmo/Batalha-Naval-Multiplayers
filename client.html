@@ -162,8 +162,9 @@
 
         let contador_embarcacoes = 0;
         let momento_2 = false;
-        let player = '';
         let ultima_posicao_atacada = '';
+        let player = '';
+        let current_player = 'player1';
 
         // Função para restringir as posições das embarcações
         function validaPosicao(posicao) {
@@ -253,9 +254,15 @@
                     }
                 }
             } else {
-                socket.send(posicao);
-                ultima_posicao_atacada = posicao;
-                contador_embarcacoes++;
+                //Momento 2: atacar
+                //verificando vez do jogador
+                if (player == current_player) {
+                    socket.send(posicao);
+                    ultima_posicao_atacada = posicao;
+                    contador_embarcacoes++;
+                } else {
+                    alert("Vez do jogador adversário");
+                }
             }
             return;
         };
@@ -270,10 +277,10 @@
             const data = JSON.parse(event.data);
             //verificando jogadores
             if (data.message == 'Você é o player1') {
-                player = 'vez do player1';
+                player = 'player1';
                 document.getElementById('player').innerHTML = data.message;
             } else if (data.message == 'Você é o player2') {
-                player = 'vez do player2';
+                player = 'player2';
                 document.getElementById('player').innerHTML = data.message;
             } else if (data.message == 'Aguardando oponente...') {
                 document.getElementById('player').innerHTML = data.message;
@@ -310,20 +317,24 @@
             if (data.message.includes('Você foi atingido!')) {
                 document.getElementById('status').innerHTML = data.message;
                 document.getElementById('status').style.backgroundColor = 'red';
+                current_player = data.currentPlayer;
             }
             if (data.message.includes('Você escapou!')) {
                 document.getElementById('status').innerHTML = data.message;
                 document.getElementById('status').style.backgroundColor = 'green';
+                current_player = data.currentPlayer;
             }
             if (data.message.includes('Acertou!')) {
                 document.getElementById('message').innerHTML = data.message;
                 document.getElementById('message').style.backgroundColor = 'green';
                 document.getElementById(ultima_posicao_atacada).style.backgroundColor = 'green';
+                current_player = data.currentPlayer;
             }
             if (data.message.includes('Errou!')) {
                 document.getElementById('message').innerHTML = data.message;
                 document.getElementById('message').style.backgroundColor = 'red';
                 document.getElementById(ultima_posicao_atacada).style.backgroundColor = 'red';
+                current_player = data.currentPlayer;
             }
 
             //momento 3

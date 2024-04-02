@@ -91,18 +91,16 @@ server.on('connection', (socket) => {
             //momento 2: atirar no tabuleiro
             if (tabuleiro['player1'].length === LENGTH_EMBARCACOES && tabuleiro['player2'].length === LENGTH_EMBARCACOES) {
                 console.log('Momento 2...');
-                player1.send(JSON.stringify({ message: 'Momento 2: Atire no tabuleiro do oponente'}));
-                player2.send(JSON.stringify({ message: 'Momento 2: Atire no tabuleiro do oponente'}));
+                player1.send(JSON.stringify({ message: 'Momento 2: Atire no tabuleiro do oponente', currentPlayer: 'player1'}));
+                player2.send(JSON.stringify({ message: 'Momento 2: Atire no tabuleiro do oponente', currentPlayer: 'player1'}));
                 player1.on('message', (message) => {
-                    player1.send(JSON.stringify({ message: 'vez do player2'}));
-                    player2.send(JSON.stringify({ message: 'vez do player2'}));
                     if (tabuleiro['player2'].includes(message.toString())) {
-                        player1.send(JSON.stringify({ message: 'Acertou!'}));
-                        player2.send(JSON.stringify({ message: 'Você foi atingido!'}));
+                        player1.send(JSON.stringify({ message: 'Acertou!', currentPlayer: 'player1'}));
+                        player2.send(JSON.stringify({ message: 'Você foi atingido!', currentPlayer: 'player1'}));
                         player1_acertos++;
                     } else {
-                        player1.send(JSON.stringify({ message: 'Errou!'}));
-                        player2.send(JSON.stringify({ message: 'Você escapou!'}));
+                        player1.send(JSON.stringify({ message: 'Errou!', currentPlayer: 'player2'}));
+                        player2.send(JSON.stringify({ message: 'Você escapou!', currentPlayer: 'player2'}));
                     }
                     if (player1_acertos === LENGTH_EMBARCACOES) {
                         startMomento3('player1');
@@ -110,12 +108,12 @@ server.on('connection', (socket) => {
                 });
                 player2.on('message', (message) => {
                     if (tabuleiro['player1'].includes(message.toString())) {
-                        player2.send(JSON.stringify({ message: 'Acertou!'}));
-                        player1.send(JSON.stringify({ message: 'Você foi atingido!'}));
+                        player2.send(JSON.stringify({ message: 'Acertou!', currentPlayer: 'player2'}));
+                        player1.send(JSON.stringify({ message: 'Você foi atingido!', currentPlayer: 'player2'}));
                         player2_acertos++;
                     } else {
-                        player2.send(JSON.stringify({ message: 'Errou!'}));
-                        player1.send(JSON.stringify({ message: 'Você escapou!'}));
+                        player2.send(JSON.stringify({ message: 'Errou!', currentPlayer: 'player1'}));
+                        player1.send(JSON.stringify({ message: 'Você escapou!', currentPlayer: 'player1'}));
                     }
                     if (player2_acertos === LENGTH_EMBARCACOES) {
                         startMomento3('player2');
